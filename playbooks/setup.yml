@@ -1,0 +1,14 @@
+- name: Setup homelab base
+  hosts: homelab
+  become: true
+
+  tasks:
+    - name: Install base packages
+      apt:
+        name:
+          - curl
+          - rsync
+          - cron
+        state: present
+        update_cache: true
+

@@ -1,0 +1,32 @@
+---
+- name: Create BookStack directory
+  file:
+    path: "{{ bookstack_dir }}"
+    state: directory
+    owner: "{{ docker_user }}"
+    group: "{{ docker_user }}"
+    mode: "0755"
+
+- name: Deploy docker-compose.yml
+  template:
+    src: docker-compose.yml.j2
+    dest: "{{ bookstack_dir }}/docker-compose.yml"
+    owner: "{{ docker_user }}"
+    group: "{{ docker_user }}"
+    mode: "0644"
+
+- name: Ensure BookStack volumes exist
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ docker_user }}"
+    group: "{{ docker_user }}"
+    mode: "0755"
+  loop:
+    - "{{ bookstack_dir }}/bookstack_app_data"
+    - "{{ bookstack_dir }}/bookstack_db_data"
+
+- name: Start / Update BookStack stack
+  community.docker.docker_compose_v2:
+    project_src: "{{ bookstack_dir }}"
+    state: present

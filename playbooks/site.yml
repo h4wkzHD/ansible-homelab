@@ -1,0 +1,10 @@
+- name: Homelab full setup
+  hosts: homelab
+  become: true
+
+  roles:
+    - common
+    - docker
+    - restic
+    - bookstack
+    - cron

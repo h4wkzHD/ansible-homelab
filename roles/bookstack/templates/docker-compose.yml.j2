@@ -1,0 +1,52 @@
+version: "3.8"
+
+services:
+  bookstack:
+    image: lscr.io/linuxserver/bookstack:version-v25.02
+    container_name: bookstack
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+
+      - APP_URL={{ bookstack_url }}
+      - APP_KEY={{ bookstack_app_key }}
+
+      - DB_HOST=mariadb
+      - DB_PORT=3306
+      - DB_DATABASE=bookstack
+      - DB_USERNAME=bookstack
+      - DB_PASSWORD={{ bookstack_db_password }}
+
+      - MAIL_DRIVER={{ mail_driver }}
+      - MAIL_HOST={{ mail_host }}
+      - MAIL_PORT={{ mail_port }}
+      - MAIL_FROM={{ mail_from }}
+      - MAIL_FROM_NAME={{ mail_from_name }}
+      - MAIL_USERNAME={{ mail_username }}
+      - MAIL_PASSWORD={{ mail_password }}
+      - MAIL_ENCRYPTION={{ mail_encryption }}
+
+    volumes:
+      - {{ bookstack_dir }}/bookstack_app_data:/config
+    ports:
+      - 6875:80
+    restart: unless-stopped
+
+  mariadb:
+    image: lscr.io/linuxserver/mariadb:11.4.4
+    container_name: mariadb
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+
+      - MYSQL_ROOT_PASSWORD={{ mariadb_root_password }}
+      - MYSQL_DATABASE=bookstack
+      - MYSQL_USER=bookstack
+      - MYSQL_PASSWORD={{ bookstack_db_password }}
+
+    volumes:
+      - {{ bookstack_dir }}/bookstack_db_data:/config
+    restart: unless-stopped
+

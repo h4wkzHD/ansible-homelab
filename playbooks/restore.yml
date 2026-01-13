@@ -1,0 +1,23 @@
+---
+- name: Restore homelab from Restic
+  hosts: homelab
+  become: true
+
+  tasks:
+    - name: Ensure restic env is loaded
+      stat:
+        path: /etc/restic/.env
+      register: restic_env
+
+    - name: Fail if restic env missing
+      fail:
+        msg: "Restic env file missing, cannot restore"
+      when: not restic_env.stat.exists
+
+    - name: Restore latest snapshot
+      shell: |
+        source /etc/restic/.env
+        restic restore latest --target /
+      args:
+        executable: /bin/bash
+

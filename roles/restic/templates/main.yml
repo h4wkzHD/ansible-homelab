@@ -1,0 +1,21 @@
+- name: Install restic
+  apt:
+    name: restic
+    state: present
+
+- name: Create restic config directory
+  file:
+    path: /etc/restic
+    state: directory
+    owner: root
+    group: root
+    mode: '0700'
+
+- name: Deploy restic env file
+  template:
+    src: restic.env.j2
+    dest: /etc/restic/.env
+    owner: root
+    group: root
+    mode: '0600'
+

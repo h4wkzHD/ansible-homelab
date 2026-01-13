@@ -1,0 +1,15 @@
+# Ansible
+*.retry
+.vault_pass
+
+# Secrets
+group_vars/*.vault
+group_vars/*secret*
+
+# Temp
+*.log
+*.tmp
+
+# OS
+.DS_Store
+
