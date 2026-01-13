@@ -175,6 +175,46 @@ Les sauvegardes sont gérées par Restic :
 Le restore utilise exactement la même source, garantissant la cohérence.
 
 ---
+Sauvegardes hors site – AWS
+
+Les sauvegardes Restic sont stockées hors du serveur, sur un backend AWS (S3).
+
+Ce choix est volontaire :
+
+si le serveur tombe (disque, OS, erreur humaine),
+
+si le serveur est compromis,
+
+ou si je dois repartir sur une machine vierge,
+
+les sauvegardes restent accessibles et intactes.
+
+AWS n’est pas utilisé pour “faire du cloud”, mais simplement comme :
+
+un stockage fiable,
+
+disponible partout,
+
+indépendant de l’infrastructure locale.
+
+Pourquoi AWS / S3
+
+haute durabilité des données
+
+coût maîtrisé pour un usage backup
+
+parfaitement supporté par Restic
+
+aucune dépendance à un service auto-hébergé supplémentaire
+
+Les accès AWS sont limités au strict nécessaire :
+
+une clé dédiée au backup
+
+aucun droit superflu
+
+credentials stockés uniquement via Ansible Vault
+
 
 ## Git & sécurité
 
