@@ -35,24 +35,42 @@ Services principaux :
 ## Structure du dépôt
 
 ```text
-ansible-homelab/
 ├── ansible.cfg
-├── inventory/
-│   └── hosts.yml
-├── group_vars/
-│   └── homelab/
-│       ├── vars.yml
-│       └── vault.yml (chiffré)
-├── playbooks/
-│   ├── site.yml
-│   ├── setup.yml
-│   └── restore.yml
-├── roles/
-│   ├── common/
-│   ├── docker/
-│   ├── restic/
-│   └── bookstack/
-└── README.md
+├── group_vars
+│   └── homelab.yml
+├── inventory
+│   └── hosts.yml
+├── playbooks
+│   ├── restore.yml
+│   ├── setup.yml
+│   └── site.yml
+└── roles
+    ├── bookstack
+    │   ├── handlers
+    │   ├── tasks
+    │   │   └── main.yml
+    │   └── templates
+    │       └── docker-compose.yml.j2
+    ├── common
+    │   ├── handlers
+    │   ├── tasks
+    │   │   └── main.yml
+    │   └── templates
+    ├── cron
+    │   ├── handlers
+    │   ├── tasks
+    │   └── templates
+    ├── docker
+    │   ├── handlers
+    │   ├── tasks
+    │   │   └── main.yml
+    │   └── templates
+    └── restic
+        ├── handlers
+        ├── tasks
+        └── templates
+            ├── main.yml
+            └── restic.env.j2
 ```
 
 Chaque rôle fait **une chose précise**, sans logique cachée.
