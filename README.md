@@ -1,18 +1,30 @@
 # Ansible Homelab
 
-## Pourquoi ce projet existe
+# Pourquoi ce projet existe
 
-À la base, ce repo est né d’un besoin très simple : **arrêter de bricoler mon homelab à la main**.
+À l’origine, ce repo n’avait pas vocation à “refaire” tout mon homelab ou à automatiser chaque détail.
 
-Entre Docker, les volumes, les sauvegardes, les secrets et les réinstallations, je me suis rendu compte que :
+L’idée était beaucoup plus pragmatique :
+avoir un vrai plan de secours le jour où mon serveur me lâche complètement.
 
-* je faisais souvent les mêmes actions,
-* je dépendais trop de ma mémoire,
-* et surtout qu’en cas de crash, le stress montait vite.
+Je voulais :
 
-L’objectif de ce projet est donc clair : **pouvoir reconstruire et restaurer mon homelab de manière fiable, reproductible et sécurisée**.
+des sauvegardes régulières et fiables, sans y penser,
 
-Ce n’est pas un repo “clé en main” universel, c’est **mon homelab**, structuré proprement, mais avec des choix assumés.
+stockées hors du serveur (via Restic + AWS),
+
+et surtout pouvoir restaurer rapidement sans tout refaire à la main.
+
+Ansible est venu naturellement pour orchestrer tout ça :
+
+déployer les services (Docker, BookStack , ect..),
+
+gérer la configuration,
+
+et me permettre de reconstruire un environnement fonctionnel en peu de temps.
+
+Ce repo représente donc un PRA personnel (Plan de Reprise d’Activité) pour mon homelab :
+Ce n’est pas un repo “clé en main” universel, c’est mon homelab, structuré proprement, mais avec mes choix.
 
 ---
 
