@@ -1,0 +1,46 @@
+- name: Assert required restic variables are defined
+  assert:
+    that:
+      - restic_repository is defined
+      - restic_password is defined
+      - aws_access_key is defined
+      - aws_secret_key is defined
+    fail_msg: "Variables Restic/AWS manquantes. Vérifie le vault."
+
+- name: Debug AWS vars
+  debug:
+    msg:
+      - "AWS_ACCESS_KEY={{ aws_access_key }}"
+      - "AWS_SECRET_KEY={{ aws_secret_key }}"
+
+- name: Install restic
+  apt:
+    name: restic
+    state: present
+
+- name: Create restic config directory
+  file:
+    path: /etc/restic
+    state: directory
+    owner: root
+    group: root
+    mode: '0700'
+
+- name: Deploy restic env file
+  template:
+    src: restic.env.j2
+    dest: /etc/restic/.env
+    owner: root
+    group: root
+    mode: '0600'
+
+- name: Deploy restic backup script
+  template:
+    src: restic-backup.sh.j2
+    dest: /usr/local/bin/restic-backup.sh
+    mode: '0755'
+
+- name: DEBUG restic vars scope
+  debug:
+    var: restic_repository
+

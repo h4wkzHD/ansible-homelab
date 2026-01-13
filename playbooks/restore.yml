@@ -1,23 +1,41 @@
 ---
-- name: Restore homelab from Restic
+- name: Restore homelab from Restic (SAFE MODE)
   hosts: homelab
   become: true
 
+  vars_prompt:
+    - name: restore_path
+      prompt: |
+        Quel chemin veux-tu restaurer ?
+        Exemples :
+        - /home/dylan/docker
+        - /var/lib/docker/volumes
+        - /etc
+      private: false
+
   tasks:
-    - name: Ensure restic env is loaded
+    - name: Check restic env file
       stat:
         path: /etc/restic/.env
       register: restic_env
 
-    - name: Fail if restic env missing
+    - name: Abort if restic env missing
       fail:
-        msg: "Restic env file missing, cannot restore"
+        msg: "Restic env file missing, restore impossible"
       when: not restic_env.stat.exists
 
-    - name: Restore latest snapshot
+    - name: Safety check - forbid root restore
+      fail:
+        msg: "Restaurer / est interdit. Choisis un chemin précis."
+      when: restore_path == "/"
+
+    - name: Restore selected path from latest snapshot
       shell: |
         source /etc/restic/.env
-        restic restore latest --target /
+        restic restore latest --target / --include {{ restore_path }}
       args:
         executable: /bin/bash
+      register: restic_restore
+      failed_when:
+        - restic_restore.rc not in [0, 1]
 

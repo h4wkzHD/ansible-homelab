@@ -1,16 +1,3 @@
-- name: Remove old Docker repo if exists
-  file:
-    path: /etc/apt/sources.list.d/docker.list
-    state: absent
-
-- name: Remove old Docker GPG keys
-  file:
-    path: "{{ item }}"
-    state: absent
-  loop:
-    - /usr/share/keyrings/docker-archive-keyring.gpg
-    - /etc/apt/keyrings/docker.gpg
-
 - name: Install required packages
   apt:
     name:
@@ -39,6 +26,12 @@
       https://download.docker.com/linux/debian
       bookworm stable
     state: present
+    filename: docker
+    update_cache: no  
+
+- name: Update apt cache after Docker repo
+  apt:
+    update_cache: yes
 
 - name: Install Docker
   apt:
@@ -49,7 +42,6 @@
       - docker-buildx-plugin
       - docker-compose-plugin
     state: present
-    update_cache: yes
 
 - name: Enable Docker service
   service:
@@ -62,4 +54,3 @@
     name: dylan
     groups: docker
     append: yes
-

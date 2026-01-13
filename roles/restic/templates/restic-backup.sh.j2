@@ -1,0 +1,11 @@
+#!/bin/bash
+set -e
+
+export $(grep -v '^#' /etc/restic/.env | xargs)
+
+BACKUP_DIR="{{ backup_dir }}"
+
+restic snapshots || restic init
+restic backup "$BACKUP_DIR"
+restic forget --keep-daily 7 --keep-weekly 4 --keep-monthly 6 --prune
+

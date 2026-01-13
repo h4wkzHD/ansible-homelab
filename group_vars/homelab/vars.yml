@@ -1,0 +1,8 @@
+user_name: dylan
+
+bookstack_dir: /home/dylan/docker/bookstack
+backup_dir: /backups
+
+timezone: Europe/Paris
+docker_user: dylan
+
