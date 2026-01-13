@@ -188,17 +188,11 @@ Si je ne comprends pas ce que fait un rôle en le relisant plus tard, c’est qu
 
 ---
 
-## À venir
-
-* monitoring
-* rotation automatique des backups
-* restore ciblé par service
-* documentation encore plus fine
-
----
-
 Si tu lis ce README et que tu te dis :
 
 > « ok, je vois pourquoi chaque choix a été fait »
 
 alors le repo remplit son rôle.
+
+
+Enjoy ^^
