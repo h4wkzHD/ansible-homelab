@@ -9,19 +9,15 @@ avoir un vrai plan de secours le jour où mon serveur me lâche complètement.
 
 Je voulais :
 
-des sauvegardes régulières et fiables, sans y penser,
-
-stockées hors du serveur (via Restic + AWS),
-
-et surtout pouvoir restaurer rapidement sans tout refaire à la main.
+* des sauvegardes régulières et fiables, sans y penser,
+* stockées hors du serveur (via Restic + AWS),
+* et surtout pouvoir restaurer rapidement sans tout refaire à la main.
 
 Ansible est venu naturellement pour orchestrer tout ça :
 
-déployer les services (Docker, BookStack , ect..),
-
-gérer la configuration,
-
-et me permettre de reconstruire un environnement fonctionnel en peu de temps.
+* déployer les services (Docker, BookStack , ect..),
+* gérer la configuration,
+* et me permettre de reconstruire un environnement fonctionnel en peu de temps.
 
 Ce repo représente donc un PRA personnel (Plan de Reprise d’Activité) pour mon homelab :
 Ce n’est pas un repo “clé en main” universel, c’est mon homelab, structuré proprement, mais avec mes choix.
