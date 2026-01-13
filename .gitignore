@@ -5,6 +5,10 @@
 # Secrets
 group_vars/*.vault
 group_vars/*secret*
+**/vault.yml
+**/*.vault.yml
+.env
+.env.*
 
 # Temp
 *.log
