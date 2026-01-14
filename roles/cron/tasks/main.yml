@@ -1,0 +1,10 @@
+---
+- name: Install system crontab
+  copy:
+    src: crontab
+    dest: /etc/crontab
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes
+

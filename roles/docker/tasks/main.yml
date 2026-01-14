@@ -5,7 +5,6 @@
       - curl
       - gnupg
     state: present
-    update_cache: yes
 
 - name: Create keyrings directory
   file:
@@ -13,27 +12,34 @@
     state: directory
     mode: '0755'
 
-- name: Add Docker GPG key
+- name: Download Docker GPG key (raw)
   get_url:
     url: https://download.docker.com/linux/debian/gpg
-    dest: /etc/apt/keyrings/docker.gpg
+    dest: /tmp/docker.gpg
+    mode: '0644'
+
+- name: Convert Docker GPG key to keyring format
+  command: gpg --dearmor -o /etc/apt/keyrings/docker.gpg /tmp/docker.gpg
+  args:
+    creates: /etc/apt/keyrings/docker.gpg
+
+- name: Set permissions on Docker keyring
+  file:
+    path: /etc/apt/keyrings/docker.gpg
     mode: '0644'
 
 - name: Add Docker repository
   apt_repository:
-    repo: >
-      deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg]
-      https://download.docker.com/linux/debian
-      bookworm stable
+    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian bookworm stable"
     state: present
     filename: docker
-    update_cache: no  
+    update_cache: no
 
-- name: Update apt cache after Docker repo
+- name: Update apt cache AFTER Docker repo is valid
   apt:
     update_cache: yes
 
-- name: Install Docker
+- name: Install Docker packages
   apt:
     name:
       - docker-ce
@@ -54,3 +60,4 @@
     name: dylan
     groups: docker
     append: yes
+
