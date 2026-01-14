@@ -211,10 +211,6 @@ Ce repo est pensé pour être partagé **sans honte ni risque**.
 ---
 ## Installation
 
-```bash
-sudo apt update
-sudo apt install -y git ansible python3-pip
-```
 Pré-requis sur la VM :
 
 ```bash
