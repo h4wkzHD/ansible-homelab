@@ -209,7 +209,7 @@ AWS n’est pas utilisé pour “faire du cloud”, mais simplement comme :
 Ce repo est pensé pour être partagé **sans honte ni risque**.
 
 ---
-## Installation dur une nouvelle machine
+## Installation
 
 ```bash
 sudo apt update
