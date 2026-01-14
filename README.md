@@ -67,7 +67,7 @@ $ tree
     │   ├── handlers
     │   ├── tasks
     │   │   └── main.yml
-    │   └── templates
+    │   └── files
     │       └── crontab
     ├── docker
     │   ├── handlers
