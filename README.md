@@ -31,27 +31,25 @@ Ce n’est pas un repo “clé en main” universel, c’est mon homelab, struct
 * **Restic** : sauvegarde et restauration
 * **Ansible Vault** : gestion des secrets
 * **GitHub** : versioning
-
-Services principaux :
-
-* BookStack
-* MariaDB
-* Restic (backups distants)
-
+* **AWS** 
 ---
 
 ## Structure du dépôt
 
 ```text
+$ tree
+.
 ├── ansible.cfg
-├── group_vars
-│   └── homelab.yml
 ├── inventory
+│   ├── group_vars
+│   │   └── all.yml
 │   └── hosts.yml
 ├── playbooks
 │   ├── restore.yml
 │   ├── setup.yml
 │   └── site.yml
+├── README.md
+├── requirements.yml
 └── roles
     ├── bookstack
     │   ├── handlers
@@ -62,12 +60,15 @@ Services principaux :
     ├── common
     │   ├── handlers
     │   ├── tasks
-    │   │   └── main.yml
+    │   │   ├── main.yml
+    │   │   └── main.yml.bak
     │   └── templates
     ├── cron
     │   ├── handlers
     │   ├── tasks
+    │   │   └── main.yml
     │   └── templates
+    │       └── crontab
     ├── docker
     │   ├── handlers
     │   ├── tasks
@@ -76,8 +77,9 @@ Services principaux :
     └── restic
         ├── handlers
         ├── tasks
+        │   └── main.yml
         └── templates
-            ├── main.yml
+            ├── restic-backup.sh.j2
             └── restic.env.j2
 ```
 
@@ -92,7 +94,7 @@ Aucun secret n’est stocké en clair dans le repo.
 * Tous les mots de passe, clés API, credentials cloud sont dans :
 
   ```text
-  group_vars/homelab/vault.yml
+  inventory/group_vars/all.yml
   ```
 * Ce fichier est chiffré avec **Ansible Vault**
 * Le repo peut être public **sans fuite de secrets**
@@ -100,8 +102,8 @@ Aucun secret n’est stocké en clair dans le repo.
 Commandes utiles :
 
 ```bash
-ansible-vault edit group_vars/homelab/vault.yml
-ansible-vault view group_vars/homelab/vault.yml
+ansible-vault edit inventoty/group_vars/all.yml 
+ansible-vault view inventoty/group_vars/all.yml 
 ```
 
 ---
@@ -207,6 +209,15 @@ AWS n’est pas utilisé pour “faire du cloud”, mais simplement comme :
 Ce repo est pensé pour être partagé **sans honte ni risque**.
 
 ---
+## Installation dur une nouvelle machine
+
+
+```bash
+sudo apt update
+sudo apt install -y git ansible python3-pip
+```
+
+
 
 ## Philosophie
 
