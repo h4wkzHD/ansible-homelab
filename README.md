@@ -256,6 +256,14 @@ ansible-playbook playbooks/site.yml --ask-vault-pass
 
 Le playbook peut être relancé sans casser l’existant.
 
+# A noter : Restic ne fonctionne que si l’environnement est chargé
+
+.env présent ≠ variables actives
+
+```bash
+source /etc/restic/.env
+```
+
 ## Philosophie
 
 Ce projet n’a pas pour but d’être parfait.
