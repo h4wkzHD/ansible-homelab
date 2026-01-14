@@ -211,13 +211,54 @@ Ce repo est pensé pour être partagé **sans honte ni risque**.
 ---
 ## Installation dur une nouvelle machine
 
+```bash
+sudo apt update
+sudo apt install -y git ansible python3-pip
+```
+Pré-requis sur la VM :
 
 ```bash
 sudo apt update
 sudo apt install -y git ansible python3-pip
 ```
 
+Vérification :
+```bash
+ansible --version
+git --version
+```
+Récupération du dépôt :
+```bash
+git clone https://github.com/h4wkzHD/ansible-homelab.git
+cd ansible-homelab
+```
 
+
+Contenu du dépôt :
+```bash
+ls
+```
+ansible.cfg
+inventory
+playbooks
+README.md
+requirements.yml
+roles
+
+Installation des collections Ansible :
+```bash
+ansible-galaxy collection install -r requirements.yml
+```
+---
+
+# Lancement du déploiement
+
+Déploiement complet du homelab :
+```bash
+ansible-playbook playbooks/site.yml --ask-vault-pass
+```
+
+Le playbook peut être relancé sans casser l’existant.
 
 ## Philosophie
 
